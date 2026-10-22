@@ -1,0 +1,9 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Hybrid UI Suite" verbose="1" parallel="false">
+  <test name="BDD plus Data-driven">
+    <classes>
+      <class name="com.example.framework.runners.CucumberTestRunner"/>
+      <class name="com.example.framework.tests.LoginDataDrivenTest"/>
+    </classes>
+  </test>
+</suite>
