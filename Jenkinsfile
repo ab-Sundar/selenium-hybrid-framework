@@ -2,13 +2,24 @@ pipeline {
     agent any
     tools { jdk 'JDK21'; maven 'Maven3' }
     stages {
-        stage('Checkout') { steps { checkout scm } }
-        stage('Test') { steps { sh 'mvn -B clean test -Dheadless=true' } }
+
+        stage('Build') {
+        steps {
+            bat 'mvn -B clean test-compile'
+        }
+        }
+
+        stage ('Run Selenium Tests') {
+            steps {
+                bat 'mvn -B test'
+            }
+        }
+
     }
     post {
         always {
             junit allowEmptyResults: true, testResults: 'target/surefire-reports/TEST-*.xml'
-            archiveArtifacts artifacts: 'target/cucumber-report.html,target/cucumber-report.json,target/screenshots/**/*.png', allowEmptyArchive: true
+            archiveArtifacts artifacts: 'target/screenshots/**/*', allowEmptyArchive: true
         }
     }
 }
